@@ -4,24 +4,24 @@ const productSchema = mongoose.Schema(
     {
         user:{
             type:mongoose.Schema.Types.ObjectId,
-            rqeuired:true,
+            //  required:true,
             ref: 'User'
         },
         name:{
             type:String,
-            rqeuired:true
+            required:true
         },
         image:{
             type:String,
-            rqeuired:true
+            // required:true
         },
         description:{
             type:String,
-            rqeuired:true
+            required:true
         },
         brand:{
             type:String,
-            rqeuired:true
+            required:true   
         },
         category:{
             type:String,

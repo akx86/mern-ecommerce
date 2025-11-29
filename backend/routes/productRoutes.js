@@ -1,9 +1,18 @@
 const express = require('express');
 const router = express.Router();
-const { getProducts, getProductById } = require('../controllers/productController');
+const validationSchema = require('../middlewares/validationSchema');
+const productController = require('../controllers/productController');
+const verifyProductExist = require('../middlewares/verifyProductExist');
 
-router.route('/').get(getProducts);
 
-router.route('/:id').get(getProductById);
+router.route('/')
+.get(productController.getProducts)
+.post(validationSchema,productController.createProduct)
+
+router.route('/:id')
+.get(verifyProductExist,productController.getProductById)
+.put(verifyProductExist,productController.editProduct)
+.delete(verifyProductExist,productController.deleteProduct)
+
 
 module.exports = router;

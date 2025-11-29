@@ -8,7 +8,6 @@
     "data:import": "node seeder.js",
     "data:destroy": "node seeder.js -d"
   },
-  
   "keywords": [],
   "author": "",
   "license": "ISC",
@@ -19,6 +18,7 @@
     "cors": "^2.8.5",
     "dotenv": "^17.2.3",
     "express": "^5.1.0",
+    "express-validator": "^7.3.1",
     "mongoose": "^9.0.0",
     "nodemon": "^3.1.11"
   }
