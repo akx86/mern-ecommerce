@@ -2,7 +2,7 @@ const users = [
   {
     name: 'Admin User',
     email: 'admin@example.com',
-    password: '123456', // هنشفرها واحنا بنرفعها
+    password: '123456', 
     isAdmin: true,
   },
   {

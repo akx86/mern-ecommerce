@@ -3,16 +3,17 @@ const router = express.Router();
 const validationSchema = require('../middlewares/validationSchema');
 const productController = require('../controllers/productController');
 const verifyProductExist = require('../middlewares/verifyProductExist');
-
+const verifyToken = require('../middlewares/verifyToken')
+const allowedTo = require('../middlewares/allowedTo')
 
 router.route('/')
 .get(productController.getProducts)
-.post(validationSchema,productController.createProduct)
+.post(verifyToken,allowedTo('admin'),validationSchema,productController.createProduct)
 
 router.route('/:id')
 .get(verifyProductExist,productController.getProductById)
-.put(verifyProductExist,productController.editProduct)
-.delete(verifyProductExist,productController.deleteProduct)
+.patch(verifyToken, allowedTo('admin') , verifyProductExist,productController.editProduct)
+.delete(verifyToken, allowedTo('admin') , verifyProductExist,productController.deleteProduct)
 
 
 module.exports = router;

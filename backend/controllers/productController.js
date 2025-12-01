@@ -4,6 +4,7 @@ const Product =require('../models/productModel');
 const appError = require('../utils/appError');
 const httpStatusText = require('../utils/httpStatusText');
 
+
 const getProducts = asyncWrapper(
         async (req, res, next) => {  
         const products = await Product.find({})
@@ -39,12 +40,12 @@ const editProduct=asyncWrapper(
         await product.save();
 
         res.status(200).json({status:httpStatusText.SUCCESS,data:{product}})
-    })
+})
 const deleteProduct=asyncWrapper(
     async(req, res, next)=>{
        await req.product.deleteOne();
        res.status(200).json({status:httpStatusText.SUCCESS,data:null})
-    })
+})
 
 module.exports = {
     getProducts,
