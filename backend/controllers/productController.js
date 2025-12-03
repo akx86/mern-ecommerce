@@ -3,16 +3,23 @@ const asyncWrapper = require('../middlewares/asyncWrapper');
 const Product =require('../models/productModel');
 const appError = require('../utils/appError');
 const httpStatusText = require('../utils/httpStatusText');
-
+const APIFeatures = require('../utils/apiFeatures');
 
 const getProducts = asyncWrapper(
         async (req, res, next) => {  
-        const products = await Product.find({})
-        if(!products){
-            const error = appError.create('Products Not Found',404,httpStatusText.FAIL);
-            return next(error);
-        }
-        res.json({status:httpStatusText.SUCCESS,data:products}) 
+        const features = new APIFeatures(Product.find(),req.query)
+        .filter()
+        .search()
+        .sort()
+        .limitFields()
+        .paginate()
+        const products = await features.query;
+        res.json({
+        status: httpStatusText.SUCCESS,
+        results: products.length,
+        data: { products }
+    });
+        
 })
 const getProductById = asyncWrapper(
     async(req, res, next) => {
