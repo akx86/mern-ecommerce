@@ -3,8 +3,9 @@ const router = express.Router()
 const userController = require('../controllers/userController')
 const verifyToken = require('../middlewares/verifyToken');
 const allowedTo = require('../middlewares/allowedTo');
+const upload = require('../middlewares/uploadImage');
 
-router.post('/register', userController.register);
+router.post('/register',upload.single('profileImg'), userController.register);
 router.post('/login', userController.login);
 
 router.route('/profile')

@@ -3,6 +3,8 @@ const User = require("../models/userModel");
 const appError = require("../utils/appError");
 const httpStatusText = require("../utils/httpStatusText");
 const generateToken = require("../utils/generateToken");
+const { uploadToCloudinary } = require('../utils/cloudinary');
+const fs = require('fs');
 
 const getAllUsers = asyncWrapper(async(req, res, next)=>{
     const users = await User.find().select('-password');
@@ -49,7 +51,12 @@ const updateUserProfile = asyncWrapper(async(req, res, next)=>{
 
 const register = asyncWrapper(async(req, res, next)=>{
     const {name, email, password} = req.body;
-
+    let profileImg ='';
+    if(req.file){
+        const result = await uploadToCloudinary(req.file, 'users');
+        profileImgUrl = result.secure_url;
+        fs.unlinkSync(req.file.path);
+    }
     const userExists =await User.findOne({email})
     if(userExists){
         const error = appError.create('User already exists', 400, httpStatusText.FAIL)
@@ -58,7 +65,8 @@ const register = asyncWrapper(async(req, res, next)=>{
     const user = await User.create({
         name,
         email,
-        password
+        password,
+        profileImg:profileImgUrl ||undefined
     })
     const token = await generateToken({email:user.email,id:user._id,role:user.isAdmin?'admin': 'user'})
     res.status(201).json({
@@ -69,7 +77,8 @@ const register = asyncWrapper(async(req, res, next)=>{
                 name: user.name,
                 email: user.email,
                 isAdmin: user.isAdmin,
-                token: token 
+                token: token ,
+                profileImg:profileImgUrl ||undefined
             }
         }
     });

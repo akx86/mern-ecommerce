@@ -4,6 +4,8 @@ const Product =require('../models/productModel');
 const appError = require('../utils/appError');
 const httpStatusText = require('../utils/httpStatusText');
 const APIFeatures = require('../utils/apiFeatures');
+const { uploadToCloudinary } = require('../utils/cloudinary');
+const fs = require('fs');
 
 const getProducts = asyncWrapper(
         async (req, res, next) => {  
@@ -28,8 +30,14 @@ const getProductById = asyncWrapper(
 })
 const createProduct=asyncWrapper (
     async(req, res, next)=>{
-        console.log('data =>',req.body);
-        
+        if (!req.file) {
+        const error = appError.create('Image is required', 400, httpStatusText.FAIL);
+        return next(error)
+        }
+        const result = await uploadToCloudinary(req.file, 'products');
+        req.body.image = result.secure_url
+        fs.unlinkSync(req.file.path);
+
     const errors = validationResult(req);
     if(!errors.isEmpty()){
         const error = appError.create(errors.array()[0].msg,400,httpStatusText.FAIL);
@@ -37,7 +45,7 @@ const createProduct=asyncWrapper (
     }
     const newProduct = new Product(req.body);
     await newProduct.save();
-    res.status(201).json({status:httpStatusText.SUCCESS,data:{newProduct}})
+    res.status(201).json({status:httpStatusText.SUCCESS, product:{newProduct}})
 })
 const editProduct=asyncWrapper(
     async(req, res, next)=>{
