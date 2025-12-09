@@ -15,15 +15,17 @@ class APIFeatures {
         return this;
     }
     search(){
-       if(this.queryString.keyword){
-        const keyword = this.queryString.keyword;
-        const query = {
-            $or:[
-                {name:{$regex:keyword, $options:'i'}},
-                {description:{$regex:keyword, $options:'i'}}
+       if(this.queryString.search){
+        const keyword = this.queryString.search;
+        const queryObj = {
+            $or: [
+                // 1. دور في الوصف
+                { description: { $regex: keyword, $options: 'i' } },
+                // 2. دور في الكاتيجوري
+                { category: { $regex: keyword, $options: 'i' } }
             ]
-        }
-        this.query = this.query.find(query)
+        };
+        this.query = this.query.find(queryObj)
        }
        return this;
     }
@@ -48,7 +50,7 @@ class APIFeatures {
     paginate(){
         const page = this.queryString.page * 1 || 1;
         const limit = this.queryString.limit * 1 || 50;
-        const skip = ([page-1]) * limit;
+        const skip = (page-1) * limit;
         this.query = this.query.skip(skip).limit(limit);
         return this;
     }

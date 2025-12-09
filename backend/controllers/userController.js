@@ -8,8 +8,11 @@ const fs = require('fs');
 
 const getAllUsers = asyncWrapper(async(req, res, next)=>{
     const users = await User.find().select('-password');
+
+        const total = await User.countDocuments();
     res.json({
         status: httpStatusText.SUCCESS,
+        total:total,
         data: {users}
     });
 })
@@ -51,7 +54,7 @@ const updateUserProfile = asyncWrapper(async(req, res, next)=>{
 
 const register = asyncWrapper(async(req, res, next)=>{
     const {name, email, password} = req.body;
-    let profileImg ='';
+    let profileImgUrl ='';
     if(req.file){
         const result = await uploadToCloudinary(req.file, 'users');
         profileImgUrl = result.secure_url;

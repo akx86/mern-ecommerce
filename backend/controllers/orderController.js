@@ -57,8 +57,10 @@ const getMyOrders = asyncWrapper(async (req, res, next) => {
 })
 const getOrders = asyncWrapper(async (req, res, next) => {
     const orders = await Order.find({}).populate('user', 'id name');
+    const total = await Order.countDocuments();
     res.json({
         status: httpStatusText.SUCCESS,
+        total:total,
         data: { orders }
     });
 })

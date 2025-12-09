@@ -8,17 +8,23 @@ const { uploadToCloudinary } = require('../utils/cloudinary');
 const fs = require('fs');
 
 const getProducts = asyncWrapper(
-        async (req, res, next) => {  
+        async (req, res, next) => {     
+            const checkProduct = await Product.findOne();
+    console.log("🔥 شكل المنتج الحقيقي:", checkProduct);     
         const features = new APIFeatures(Product.find(),req.query)
         .filter()
         .search()
         .sort()
         .limitFields()
-        .paginate()
-        const products = await features.query;
+
+        const countQuery = features.query.clone(); 
+        const totalSearchResults = await countQuery.countDocuments();
+        features.paginate();
+         const products = await features.query;
         res.json({
         status: httpStatusText.SUCCESS,
         results: products.length,
+        total:totalSearchResults,
         data: { products }
     });
         
