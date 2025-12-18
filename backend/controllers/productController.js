@@ -10,7 +10,6 @@ const fs = require('fs');
 const getProducts = asyncWrapper(
         async (req, res, next) => {     
             const checkProduct = await Product.findOne();
-    console.log("🔥 شكل المنتج الحقيقي:", checkProduct);     
         const features = new APIFeatures(Product.find(),req.query)
         .filter()
         .search()

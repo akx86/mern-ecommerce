@@ -126,6 +126,12 @@ const getUserProfile = asyncWrapper(async(req, res, next)=>{
         return next(error);
     }
 })
+const logOut = asyncWrapper(async(req, res, next)=>{
+    res.json({
+        status: httpStatusText.SUCCESS,
+        data: null
+    });
+})
 
 module.exports ={
     register,
@@ -133,5 +139,6 @@ module.exports ={
     getUserProfile,
     getAllUsers,
     deleteUser,
-    updateUserProfile
+    updateUserProfile,
+    logOut
 }

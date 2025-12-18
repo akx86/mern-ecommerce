@@ -12,6 +12,7 @@ const rateLimit = require('express-rate-limit');
 const helmet = require('helmet');
 const mongoSanitize = require('./middlewares/mongoSanitize')
 const authRoutes = require('./routes/authRoutes');
+const cartRoutes = require('./routes/cartRoutes');
 connectDB();
 
 app.use(cors(
@@ -34,6 +35,8 @@ app.use('/api/products', productRoutes)
 app.use('/api/auth', authRoutes);
 app.use('/api/users', userRoutes)
 app.use('/api/orders', orderRoutes)
+app.use('/api/cart', cartRoutes);
+
 app.use((err, req, res, next) => {
     res.status(err.statusCode || 500)
         .json({
