@@ -1,115 +1,78 @@
-import React from "react";
-import { Link } from "react-router-dom";
-import { 
-  Facebook, 
-  Twitter, 
-  Instagram, 
-  Linkedin, 
-  Mail, 
-  Phone, 
-  MapPin, 
-  ShoppingBag 
-} from "lucide-react";
+import { Link } from 'react-router-dom';
+import { Facebook, Twitter, Instagram, Linkedin, Heart } from 'lucide-react';
 
-import { Button } from "@/components/ui/button";
-import { Input } from "@/components/ui/input";
-import { Separator } from "@/components/ui/separator";
-
-export default function Footer() {
+function Footer() {
   return (
-    <footer className="bg-secondary/20 border-t">
-      <div className="container mx-auto px-4 md:px-6 py-12">
-        <div className="grid grid-cols-1 md:grid-cols-4 gap-8">
+    <footer className="bg-slate-950 border-t border-white/10 pt-16 pb-8 relative overflow-hidden">
+      {/* Background Glow */}
+      <div className="absolute top-0 left-1/2 -translate-x-1/2 w-[600px] h-[300px] bg-indigo-900/10 rounded-full blur-[100px] pointer-events-none"></div>
+
+      <div className="max-w-7xl mx-auto px-4 relative z-10">
+        <div className="grid grid-cols-1 md:grid-cols-4 gap-12 mb-12">
           
-          {/* 1. Brand Info */}
+          {/* Brand Section */}
           <div className="space-y-4">
-            <Link to="/" className="flex items-center gap-2">
-              <div className="bg-primary text-primary-foreground p-1 rounded-md">
-                <ShoppingBag className="h-5 w-5" />
-              </div>
-              <span className="font-bold text-xl">MyStore</span>
+            <Link to="/" className="text-2xl font-black tracking-tighter text-white">
+              STORE<span className="text-indigo-500">.</span>
             </Link>
-            <p className="text-muted-foreground text-sm leading-relaxed">
-              Your one-stop shop for everything you need. Quality products, 
-              fast shipping, and excellent customer service.
+            <p className="text-slate-400 text-sm leading-relaxed">
+              Experience the future of shopping with our premium collection. Quality meets modern design.
             </p>
-            <div className="flex gap-4">
-              <Button variant="ghost" size="icon" className="hover:text-primary">
-                <Facebook className="h-5 w-5" />
-              </Button>
-              <Button variant="ghost" size="icon" className="hover:text-primary">
-                <Instagram className="h-5 w-5" />
-              </Button>
-              <Button variant="ghost" size="icon" className="hover:text-primary">
-                <Twitter className="h-5 w-5" />
-              </Button>
+            <div className="flex gap-4 pt-2">
+              <a href="#" className="text-slate-400 hover:text-indigo-400 transition-colors"><Facebook size={20} /></a>
+              <a href="#" className="text-slate-400 hover:text-indigo-400 transition-colors"><Twitter size={20} /></a>
+              <a href="#" className="text-slate-400 hover:text-indigo-400 transition-colors"><Instagram size={20} /></a>
+              <a href="#" className="text-slate-400 hover:text-indigo-400 transition-colors"><Linkedin size={20} /></a>
             </div>
           </div>
 
-          {/* 2. Quick Links - Shop */}
+          {/* Links 1 */}
           <div>
-            <h3 className="font-semibold mb-4">Shop</h3>
-            <ul className="space-y-2 text-sm text-muted-foreground">
-              <li><Link to="/shop" className="hover:text-foreground transition-colors">All Products</Link></li>
-              <li><Link to="/new-arrivals" className="hover:text-foreground transition-colors">New Arrivals</Link></li>
-              <li><Link to="/sale" className="hover:text-foreground transition-colors">Discounts</Link></li>
-              <li><Link to="/categories" className="hover:text-foreground transition-colors">Categories</Link></li>
+            <h4 className="text-white font-bold mb-6">Shop</h4>
+            <ul className="space-y-3 text-sm text-slate-400">
+              <li><Link to="/shop" className="hover:text-indigo-400 transition-colors">All Products</Link></li>
+              <li><Link to="/shop?category=electronics" className="hover:text-indigo-400 transition-colors">Electronics</Link></li>
+              <li><Link to="/shop?category=fashion" className="hover:text-indigo-400 transition-colors">Fashion</Link></li>
+              <li><Link to="/cart" className="hover:text-indigo-400 transition-colors">My Cart</Link></li>
             </ul>
           </div>
 
-          {/* 3. Quick Links - Support */}
+          {/* Links 2 */}
           <div>
-            <h3 className="font-semibold mb-4">Support</h3>
-            <ul className="space-y-2 text-sm text-muted-foreground">
-              <li><Link to="/contact" className="hover:text-foreground transition-colors">Contact Us</Link></li>
-              <li><Link to="/faq" className="hover:text-foreground transition-colors">FAQs</Link></li>
-              <li><Link to="/shipping" className="hover:text-foreground transition-colors">Shipping & Returns</Link></li>
-              <li><Link to="/privacy" className="hover:text-foreground transition-colors">Privacy Policy</Link></li>
+            <h4 className="text-white font-bold mb-6">Support</h4>
+            <ul className="space-y-3 text-sm text-slate-400">
+              <li><Link to="#" className="hover:text-indigo-400 transition-colors">Help Center</Link></li>
+              <li><Link to="#" className="hover:text-indigo-400 transition-colors">Terms of Service</Link></li>
+              <li><Link to="#" className="hover:text-indigo-400 transition-colors">Privacy Policy</Link></li>
+              <li><Link to="#" className="hover:text-indigo-400 transition-colors">Contact Us</Link></li>
             </ul>
           </div>
 
-          {/* 4. Newsletter */}
-          <div className="space-y-4">
-            <h3 className="font-semibold">Stay Updated</h3>
-            <p className="text-sm text-muted-foreground">
-              Subscribe to our newsletter to get the latest updates and offers.
-            </p>
-            <div className="flex gap-2">
-              <Input 
+          {/* Newsletter */}
+          <div>
+            <h4 className="text-white font-bold mb-6">Stay Updated</h4>
+            <div className="flex flex-col gap-3">
+              <input 
                 type="email" 
                 placeholder="Enter your email" 
-                className="bg-background"
+                className="bg-white/5 border border-white/10 rounded-xl px-4 py-3 text-sm text-white placeholder:text-slate-500 focus:outline-none focus:border-indigo-500/50 transition-all"
               />
-              <Button>Subscribe</Button>
-            </div>
-            
-            <div className="pt-4 space-y-2 text-sm text-muted-foreground">
-                <div className="flex items-center gap-2">
-                    <Mail className="h-4 w-4" />
-                    <span>support@mystore.com</span>
-                </div>
-                <div className="flex items-center gap-2">
-                    <Phone className="h-4 w-4" />
-                    <span>+1 (555) 123-4567</span>
-                </div>
+              <button className="bg-indigo-600 hover:bg-indigo-500 text-white font-bold py-3 rounded-xl text-sm transition-all shadow-lg shadow-indigo-900/20">
+                Subscribe
+              </button>
             </div>
           </div>
         </div>
 
-        <Separator className="my-8" />
-
-        {/* Bottom Bar */}
-        <div className="flex flex-col md:flex-row justify-between items-center gap-4 text-sm text-muted-foreground">
-          <p>© {new Date().getFullYear()} MyStore. All rights reserved.</p>
-          
-          <div className="flex gap-4">
-            {/* Payment Icons (Simulated with text/styled divs for now) */}
-            <span className="hover:text-foreground cursor-pointer">Terms</span>
-            <span className="hover:text-foreground cursor-pointer">Privacy</span>
-            <span className="hover:text-foreground cursor-pointer">Cookies</span>
-          </div>
+        <div className="border-t border-white/5 pt-8 flex flex-col md:flex-row justify-between items-center gap-4">
+          <p className="text-slate-500 text-sm">© 2024 STORE. All rights reserved.</p>
+          <p className="text-slate-500 text-sm flex items-center gap-1">
+            Made with <Heart size={14} className="text-red-500 fill-red-500" /> Ahmed Khaled
+          </p>
         </div>
       </div>
     </footer>
   );
 }
+
+export default Footer;

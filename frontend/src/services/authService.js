@@ -1,10 +1,12 @@
 import axiosInstance from "./axiosInstance";
 
 export const registerUser = async (userData)=>{
-    const res = await axiosInstance.post('/auth/register', userData)
-    if(res.data){
-        localStorage.setItem('user', JSON.stringify(res.data))
-    }
+    const res = await axiosInstance.post('/auth/register', userData,{
+        headers: {
+            "Content-Type": undefined
+        }
+    })
+    
     return res.data;
 }
 export const loginUser = async (userData)=>{

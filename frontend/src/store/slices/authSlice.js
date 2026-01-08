@@ -14,7 +14,7 @@ const token = localStorage.getItem('token')
 const initialState ={
     user :getUserFromStorage(),
     token :token ||null,
-    isAuthenticated :!!token
+    isAuthenticated :!!token,
 }
 
 export const authSlice = createSlice({
@@ -34,7 +34,10 @@ export const authSlice = createSlice({
             state.isAuthenticated = false;
             localStorage.removeItem('user');
             localStorage.removeItem('token');
+            localStorage.removeItem('shippingAddress');
+            localStorage.removeItem('shippingAddress');
             localStorage.removeItem('cart');
+
         }
     }
 
