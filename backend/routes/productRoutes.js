@@ -5,14 +5,15 @@ const productController = require('../controllers/productController');
 const verifyProductExist = require('../middlewares/verifyProductExist');
 const verifyToken = require('../middlewares/verifyToken')
 const allowedTo = require('../middlewares/allowedTo')
+const upload = require('../middlewares/uploadImage');
 
 router.route('/')
 .get(productController.getProducts)
-.post(verifyToken,allowedTo('admin'),validationSchema,productController.createProduct)
+.post(verifyToken,allowedTo('admin'),upload.single('image'),validationSchema,productController.createProduct)
 
 router.route('/:id')
 .get(verifyProductExist,productController.getProductById)
-.patch(verifyToken, allowedTo('admin') , verifyProductExist,productController.editProduct)
+.patch(verifyToken, allowedTo('admin') , upload.single('image'), verifyProductExist,productController.editProduct)
 .delete(verifyToken, allowedTo('admin') , verifyProductExist,productController.deleteProduct)
 
 

@@ -4,27 +4,24 @@ const productSchema = mongoose.Schema(
     {
         user:{
             type:mongoose.Schema.Types.ObjectId,
-            //  required:true,
+             required:true,
             ref: 'User'
         },
-        name:{
+        title:{
             type:String,
             required:true
         },
         image:{
             type:String,
-            // required:true
+            required:true
         },
         description:{
             type:String,
             required:true
         },
-        brand:{
-            type:String,
-            required:true   
-        },
         category:{
-            type:String,
+            type:mongoose.Schema.Types.ObjectId,
+            ref:'Category',
             required:true
         },
         price:{
@@ -42,5 +39,6 @@ const productSchema = mongoose.Schema(
         timestamps:true,
     }
 );
+
 const Product =mongoose.model('Product',productSchema);
 module.exports = Product;
